@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOTPAELLA</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        #paella {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/1c/Paella.jpg'); /* Imagen de la paella */
+            background-size: cover;
+            overflow: hidden;
+        }
+        .chorizo {
+            position: absolute;
+            width: 50px;
+            transition: transform 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <h1>¡Toca los chorizos!</h1>
+    <div id="paella"></div>
+    <script>
+        let score = 0;
+        const paella = document.getElementById('paella');
+
+        function crearChorizo() {
+            const chorizo = document.createElement('img');
+            chorizo.src = 'https://upload.wikimedia.org/wikipedia/commons/e/e6/Chorizo.jpg';  // Imagen del chorizo
+            chorizo.classList.add('chorizo');
+            chorizo.style.left = Math.random() * 100 + '%';
+            chorizo.style.top = '-50px';
+            paella.appendChild(chorizo);
+            
+            let caer = setInterval(function() {
+                let top = parseFloat(chorizo.style.top);
+                if (top < 400) {
+                    chorizo.style.top = (top + 5) + 'px';
+                } else {
+                    clearInterval(caer);
+                    paella.removeChild(chorizo);
+                }
+            }, 100);
+
+            chorizo.addEventListener('click', function() {
+                score += 1;
+                paella.removeChild(chorizo);
+                alert('¡Ganaste un token! Puntuación: ' + score);
+            });
+        }
+
+        setInterval(crearChorizo, 1000);
+    </script>
+</body>
+</html>
